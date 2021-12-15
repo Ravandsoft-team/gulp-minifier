@@ -503,18 +503,20 @@ jQuery(document).ready(function ($) {
             $('.total_price .sf-price').text(formatter.format(price));
         }
         // console.log(parseInt($(this).attr('data-totalqty')));
-        if (num > parseInt($(this).attr('data-totalqty'))) {
-            num_product.addClass('err-input').removeClass('succ-input');
-            num_product.parent().find('.msg-input')
-                .removeClass('d-none')
-                .addClass('err-msg-input')
-                .text('تعداد وارد شده بیشتر از موجودی انبار میباشد');
-        } else if(num <= parseInt($(this).attr('data-totalqty'))){
-            num_product.addClass('succ-input').removeClass('err-input');
-            num_product.parent().find('.msg-input')
-                .addClass('d-none')
-                .removeClass('err-msg-input')
-                .text('');
+        if ($(this).attr('data-totalqty') != 'stock') {
+            if (num > parseInt($(this).attr('data-totalqty'))) {
+                num_product.addClass('err-input').removeClass('succ-input');
+                num_product.parent().find('.msg-input')
+                    .removeClass('d-none')
+                    .addClass('err-msg-input')
+                    .text('تعداد وارد شده بیشتر از موجودی انبار میباشد');
+            } else if(num <= parseInt($(this).attr('data-totalqty'))){
+                num_product.addClass('succ-input').removeClass('err-input');
+                num_product.parent().find('.msg-input')
+                    .addClass('d-none')
+                    .removeClass('err-msg-input')
+                    .text('');
+            }
         }
     });
 
@@ -618,6 +620,7 @@ jQuery(document).ready(function ($) {
         $(classRow).each(function () {
             totalpayprice += parseInt($(this).find('.sf-total-price-in-orders').text().replace(/,/g, ''));
         });
+        console.log(totalpayprice);
         $('.total_payprice .sf-total-payprice').attr('data-mainprice' , totalpayprice);
         $('.total_payprice .sf-total-payprice').text(numberWithCommas(totalpayprice));
     }
